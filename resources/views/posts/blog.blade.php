@@ -9,7 +9,7 @@ Blog
 
 <div class="container">
     <div class="text-center mt-5">
-        <button type="button" class="btn btn-success">Create Post</button>
+        <a href={{ route('posts.create') }} type="button" class="btn btn-success">Create Post</a>
     </div>
 
     <table class="table">
@@ -33,8 +33,13 @@ Blog
                         {{-- <a href="/post/{{$post["id"]}}" type="button" class="btn btn-secondary">View</a> --}}
                         {{-- Or using the route shortcut --}}
                         <a href={{ route('posts.show', $post['id']) }} type="button" class="btn btn-secondary">View</a>
-                        <a type="button" class="btn btn-primary">Edit</a>
-                        <a type="button" class="btn btn-danger">Delete</a>
+                        <a href={{ route('posts.edit', $post['id']) }} type="button" class="btn btn-primary">Edit</a>
+                        
+                        <form style="display: inline" method="POST" action={{ route("posts.destroy", 1) }}>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

@@ -21,4 +21,42 @@ class BlogController extends Controller{
 
         return view('posts.show');
     }
+    
+    public function create(){
+
+        return view('posts.create');
+    }
+    
+    public function store(){
+        // $data = $_POST;
+        // return $data;
+
+        // dd(request() -> title, request() -> all());
+        $data = request() -> all();
+        // return $data;
+
+        $title = request()->title;
+        $description = request()->description;
+        $creator = request()->creator ;
+
+        return to_route('posts.index');
+    }
+    
+    public function edit(){
+
+        return view('posts.edit');
+    }
+    
+    public function update(){
+        $title = request()->title;
+        $description = request()->description;
+        $creator = request()->creator ;
+
+        return to_route('posts.show', 1);
+    }
+
+    public function destroy(){
+
+        return view('posts.index');
+    }
 }
