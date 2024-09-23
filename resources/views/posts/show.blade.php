@@ -11,8 +11,9 @@ Show
             Post Info
         </div>
         <div class="card-body">
-            <h5 class="card-title">Title: PHP</h5>
-            <p class="card-text">Description: With supporting text below as a natural lead-in to additional content.</p>
+            {{-- <h5 class="card-title">Title: {{ $post['title'] }}</h5> --}}
+            <h5 class="card-title">Title: {{ $post->title }}</h5>
+            <p class="card-text">Description: {{ $post->description }}</p>
         </div>
     </div>
 </div>
