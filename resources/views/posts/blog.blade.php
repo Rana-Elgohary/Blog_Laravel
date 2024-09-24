@@ -18,6 +18,7 @@ Blog
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Posted By</th>
                 <th scope="col">Created At</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -31,6 +32,7 @@ Blog
                     <td>{{ $post->title }}</td>
                     {{-- <td>{{ $post['description'] }}</td> --}}
                     <td>{{ $post->description }}</td>
+                    <td></td>
                     {{-- <td>{{ $post['created_at'] }}</td> --}}
                     <td>{{ $post->created_at }}</td>
                     <td>
@@ -39,7 +41,9 @@ Blog
                         <a href={{ route('posts.show', $post['id']) }} type="button" class="btn btn-secondary">View</a>
                         <a href={{ route('posts.edit', $post['id']) }} type="button" class="btn btn-primary">Edit</a>
                         
-                        <form style="display: inline" method="POST" action={{ route("posts.destroy", 1) }}>
+                        <form style="display: inline" method="POST" 
+                        onsubmit="return confirm('Are you sure you want to delete this item?');"
+                        action={{ route("posts.destroy", $post->id) }}>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>

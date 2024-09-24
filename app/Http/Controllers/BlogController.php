@@ -47,8 +47,8 @@ class BlogController extends Controller{
 
         // NOTE ==> ROUTE MODEL BINDING:
         // if the parameter is the same name as the parameter in the route, 
-        // we can only write this public function show(Post: $postId){} and it will detect that he needs to get the user by the id from the DB
-        // It works like ==> $postFromDB = Post::findOrFail($postId);
+        // we can only write this public function show(Post $postId){} and it will detect that he needs to get the post by the id from the DB
+        // It works like ==> $post = Post::findOrFail($postId);
 
 
         // return view('posts.show', ['post' => $post]);
@@ -58,13 +58,6 @@ class BlogController extends Controller{
     public function create(){
         $users = User :: all();
 
-        dd(request());
-        $post = new Post;
-        $post->title = request()->title;
-        $post->description = request()->description;
-
-        $post -> save();
-
         return view('posts.create', ["users" => $users]);
     }
     
@@ -73,31 +66,67 @@ class BlogController extends Controller{
         // return $data;
 
         // dd(request() -> title, request() -> all());
-        $data = request() -> all();
+        // $data = request() -> all();
         // return $data;
 
+        // $title = request()->title;
+        // $description = request()->description;
+        // $creator = request()->creator ;
+
+        // First way to add to the DB
+        // $post = new Post;
+        // $post->title = request()->title;
+        // $post->description = request()->description;
+        // $post->xyz = "xyz 3";
+
+        // $post -> save();
+
+        // Second way:
+        // but this way will be need me to make some changes in the Post model
+        // this is more secure
         $title = request()->title;
         $description = request()->description;
-        $creator = request()->creator ;
-
+        $postCreator = request()->post_creator;
+        
+        Post::create([
+            'title' => $title,
+            'description' => $description,
+            'xyz' => '"xyz 3"',
+            "user_id" => $postCreator
+        ]);
+        
         return to_route('posts.index');
     }
     
-    public function edit(){
+    public function edit(Post $post){ // $post ==> is the id from the route, and this will get me the post like ($post = Post::findOrFail($postId);)
+        $users = User :: all();
 
-        return view('posts.edit');
+        return view('posts.edit', ["users" =>$users, "post" => $post]);
     }
     
-    public function update(){
+    public function update($postId){
         $title = request()->title;
         $description = request()->description;
-        $creator = request()->creator ;
+        $post_creator = request()->post_creator ;
 
-        return to_route('posts.show', 1);
+        $postFromDB = Post::find($postId);
+         
+        $postFromDB->update([ 
+            'title' => $title,
+            'description' => $description,
+            'xyz' => '"xyz 3"',
+            'user_id' => $post_creator
+        ]);
+
+        return to_route('posts.show', $postId);
     }
 
-    public function destroy(){
+    public function destroy($postId){
+        // dd($postId);
+        $postFromDB = Post::find($postId);
+        $postFromDB->delete();
+        // those are equivelant to ==> Post::where('id', $postId)->delete();
 
-        return view('posts.index');
+        return to_route('posts.index');
     }
 }
