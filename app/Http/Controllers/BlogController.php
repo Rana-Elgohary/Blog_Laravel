@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
-
+use App\Http\Requests\StorePostRequest;
 class BlogController extends Controller{
     public function index(){
         // $allPosts = [
@@ -61,7 +61,20 @@ class BlogController extends Controller{
         return view('posts.create', ["users" => $users]);
     }
     
-    public function store(){
+    public function store(StorePostRequest $request){
+
+        // Validations:
+        // $request->validate([
+        //     'title' => ['required'],
+        //     'description' => ['required'],
+        //     'post_creator' => ['required', 'exists:users,id']
+        // ]);
+
+        // Instead of writting the validations here, we can make a new class for validations
+        // To make request class for validations ==> php artisan make:request StorePostRequest
+        // And accept the request like ==> public function store(StorePostRequest $request)
+
+
         // $data = $_POST;
         // return $data;
 
@@ -84,9 +97,13 @@ class BlogController extends Controller{
         // Second way:
         // but this way will be need me to make some changes in the Post model
         // this is more secure
-        $title = request()->title;
-        $description = request()->description;
-        $postCreator = request()->post_creator;
+        // $title = request()->title;
+        // $description = request()->description;
+        // $postCreator = request()->post_creator;
+
+        $title = $request->title;
+        $description = $request->description;
+        $postCreator = $request->post_creator;
         
         Post::create([
             'title' => $title,

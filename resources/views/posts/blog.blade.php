@@ -32,7 +32,9 @@ Blog
                     <td>{{ $post->title }}</td>
                     {{-- <td>{{ $post['description'] }}</td> --}}
                     <td>{{ $post->description }}</td>
-                    <td></td>
+
+                    <td>{{ $post->user ? $post->user->name : "No User" }}</td> {{-- Eloquent Relationships (see Post model) --}}
+                    
                     {{-- <td>{{ $post['created_at'] }}</td> --}}
                     <td>{{ $post->created_at }}</td>
                     <td>

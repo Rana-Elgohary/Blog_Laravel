@@ -22,7 +22,8 @@
             <label for="formGroupExampleInput3" class="form-label">Post Creator</label>
             <select name="post_creator" class="form-control">
                 @foreach ($users as $item)
-                    <option value={{ $item->id }}>{{ $item->name }}</option>
+                    {{-- <option @if($item->id == $post->user_id) selected @endif value={{ $item->id }}>{{ $item->name }}</option> --}}
+                    <option @selected($item->id == $post->user_id) value={{ $item->id }}>{{ $item->name }}</option>
                 @endforeach
             </select>
         </div>

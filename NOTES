@@ -1,0 +1,7 @@
+To install packages like debugbar ==> using composer
+    ==> composer require barryvdh/laravel-debugbar --dev
+this package make a bar below to make me see the errors, memory and the request ...etc
+
+
+To make request class for validations 
+    php artisan make:request StorePostRequest

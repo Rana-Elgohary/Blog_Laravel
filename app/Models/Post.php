@@ -15,4 +15,10 @@ class Post extends Model
         'xyz',
         'user_id'
     ];
+
+    // Eloquent Relationships
+    public function user(){
+        return $this->belongsTo(User::class);
+        // NOTE: if the foriegnkey name isn't as followed --> (className_id), so we have to write the name of the column (return $this->belongsTo(User::class, 'foreign_key');)
+    }
 }
